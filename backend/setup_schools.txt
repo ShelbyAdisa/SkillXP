@@ -1,0 +1,31 @@
+from users.models import School
+
+# Create test school
+school, created = School.objects.get_or_create(
+    code='TEST001',
+    defaults={
+        'name': 'Test High School',
+        'address': '123 Education Street',
+        'phone': '+1234567890',
+        'email': 'admin@testschool.edu',
+        'website': 'https://testschool.edu',
+        'is_anonymous_allowed': True,
+        'max_students': 1000,
+        'theme_color': '#3B82F6'
+    }
+)
+
+if created:
+    print('✅ School created successfully!')
+else:
+    print('ℹ️ School already exists!')
+
+print(f'School Name: {school.name}')
+print(f'School Code: {school.code}')
+print(f'\nUse code "TEST001" to register!')
+
+# List all schools
+print('\n📚 Available Schools:')
+for s in School.objects.all():
+    print(f'  • {s.code} - {s.name}')
+
