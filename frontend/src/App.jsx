@@ -1,10 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import LoadingSpinner from './components/shared/LoadingSpinner';
 
 // --- AUTH PAGES ---
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import { ThemeProvider } from './context/ThemeContext.jsx';
 
 // --- STUDENT PAGES ---
 import Dashboard from './pages/dashboards/StudentDashboard';
@@ -14,6 +13,7 @@ import Wellbeing from './pages/Wellbeing';
 import Classroom from './pages/Classroom';
 import Forums from './pages/Forums';
 import Rewards from './pages/Rewards';
+import TestDash from './pages/Dashboard';
 
 // --- TEACHER PAGES ---
 import TeacherDashboard from './pages/dashboards/TeacherDashboard';
@@ -30,86 +30,43 @@ import AdminDashboard from './pages/dashboards/AdminDashboard';
 import SchoolAdminDashboard from './pages/dashboards/SchoolAdminDashboard';
 import SchoolGovernance from './pages/SchoolGovernance';
 
-// Custom PrivateRoute component
-const PrivateRoute = ({ children, role }) => {
-  const { user, isAuthReady } = useAuth();
-
-  if (!isAuthReady) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner text="Initializing..." />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  // Handle single role or array of roles
-  const allowedRoles = Array.isArray(role) ? role : [role];
-  if (role && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />; // Redirect unauthorized users
-  }
-
-  return children;
-};
-
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
         <Routes>
-          {/* PUBLIC ROUTES */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+  {/* PUBLIC ROUTES */}
+  <Route path="/" element={<Navigate to="/dashboard" replace />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/signup" element={<Signup />} />
 
-          {/* BASE DASHBOARD REDIRECT */}
-          {/* <Route 
-            path="/" 
-            element={<Navigate to="/dashboard" replace />} 
-          /> */}
+  {/* STUDENT ROUTES */}
+  <Route path="/dashboard" element={<TestDash />} />
+  <Route path="/assignments" element={<Assignments />} />
+  <Route path="/elibrary" element={<ELibrary />} />
+  <Route path="/wellbeing" element={<Wellbeing />} />
+  <Route path="/classroom" element={<Classroom />} />
+  <Route path="/forums" element={<Forums />} />
+  <Route path="/rewards" element={<Rewards />} />
+  
+  {/* TEACHER ROUTES */}
+  <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+  
+  {/* PARENT ROUTES */}
+  <Route path="/parent/dashboard" element={<ParentDashboard />} />
+  <Route path="/parent/children" element={<ParentChildren />} />
+  <Route path="/parent/progress" element={<ParentProgress />} />
+  <Route path="/parent/notifications" element={<ParentNotifications />} />
+  <Route path="/transportation" element={<Transportation />} />
+  
+  {/* ADMIN ROUTES */}
+  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+  <Route path="/school-admin/dashboard" element={<SchoolAdminDashboard />} />
+  <Route path="/school-governance" element={<SchoolGovernance />} />
 
-          {/* STUDENT ROUTES */}
-          <Route path="/dashboard" element={<PrivateRoute role="STUDENT"><Dashboard /></PrivateRoute>} />
-          <Route path="/assignments" element={<PrivateRoute><Assignments /></PrivateRoute>} />
-          <Route path="/elibrary" element={<PrivateRoute><ELibrary /></PrivateRoute>} />
-          <Route path="/wellbeing" element={<PrivateRoute><Wellbeing /></PrivateRoute>} />
-          <Route path="/classroom" element={<PrivateRoute><Classroom /></PrivateRoute>} />
-          <Route path="/forums" element={<PrivateRoute><Forums /></PrivateRoute>} />
-          <Route path="/rewards" element={<PrivateRoute><Rewards /></PrivateRoute>} />
-          
-          {/* TEACHER ROUTES */}
-          <Route path="/teacher/dashboard" element={<PrivateRoute role="TEACHER"><TeacherDashboard /></PrivateRoute>} />
-          
-          {/* -------------------------------------------------------- */}
-          {/* PARENT ROUTES: MAPPED TO UNIQUE COMPONENTS */}
-          {/* -------------------------------------------------------- */}
-          <Route path="/parent/dashboard" element={<PrivateRoute role="PARENT"><ParentDashboard /></PrivateRoute>} />
-          
-          {/* Route for Children link */}
-          <Route path="/parent/children" element={<PrivateRoute role="PARENT"><ParentChildren /></PrivateRoute>} />
-          
-          {/* Route for Progress link */}
-          <Route path="/parent/progress" element={<PrivateRoute role="PARENT"><ParentProgress /></PrivateRoute>} />
-          
-          {/* Route for Alerts link (mapped to ParentNotifications) */}
-          <Route path="/parent/notifications" element={<PrivateRoute role="PARENT"><ParentNotifications /></PrivateRoute>} />
-          
-          {/* Route for Transport link (shared with School Admin) */}
-          <Route path="/transportation" element={<PrivateRoute role="PARENT"><Transportation /></PrivateRoute>} />
-          
-          {/* -------------------------------------------------------- */}
-          
-          {/* ADMIN/SCHOOL ADMIN ROUTES */}
-          <Route path="/admin/dashboard" element={<PrivateRoute role="ADMIN"><AdminDashboard /></PrivateRoute>} />
-          <Route path="/school-admin/dashboard" element={<PrivateRoute role="SCHOOL_ADMIN"><SchoolAdminDashboard /></PrivateRoute>} />
-          <Route path="/school-governance" element={<PrivateRoute role={['PARENT', 'SCHOOL_ADMIN']}><SchoolGovernance /></PrivateRoute>} />
+  {/* 404 */}
+  <Route path="*" element={<Navigate to="/" replace />} />
+</Routes>
 
-          {/* 404 CATCH-ALL */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </AuthProvider>
     </BrowserRouter>
   );
 }
