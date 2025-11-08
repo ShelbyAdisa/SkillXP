@@ -1,16 +1,16 @@
-import React from 'react'
-import Sidebar from './Sidebar'
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import SiteNavbar from './layout/SiteNavbar'; // Import the new navbar
 
-const Layout = ({ children }) => {
+export default function Layout() {
   return (
-    <div className="flex min-h-screen bg-slate-50">
-      <Sidebar />
-      <main className="flex-1 overflow-y-auto pt-16 lg:pt-0">
-        {children}
+    // This div provides the site-wide background
+    <div className="min-h-screen bg-[#0B1416]"> 
+      <SiteNavbar />
+      <main>
+        {/* Outlet renders the current page (e.g., /classroom/learnprogramming) */}
+        <Outlet /> 
       </main>
     </div>
-  )
+  );
 }
-
-export default Layout
-
