@@ -56,6 +56,10 @@ function App() {
           {/* This is the new, dynamic route for classrooms */}
           <Route path="/classroom/:classId" element={<Classroom />} />
 
+          {/* === YOUR NEW TEST ROUTE === */}
+          {/* This is your temporary route for easy testing. */}
+          <Route path="/StudentDashboard" element={<StudentDashboard />} />
+
           {/* Role-Specific Dashboards */}
           <Route path="/student/dashboard" element={<StudentDashboard />} />
           <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
