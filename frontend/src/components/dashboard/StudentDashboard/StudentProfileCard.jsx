@@ -43,12 +43,26 @@ const StudentProfileCard = () => {
           <span className="text-[#82959B] font-medium">Karma (XP)</span>
         </div>
         
-        {/* 2. WRAP THE BUTTON WITH A LINK */}
-        <Link to="/student/profile">
-          <Button variant="outline" className="w-full">
-            View Full Profile
-          </Button>
-        </Link>
+        {/* --- MODIFICATION START --- */}
+        {/* Wrapper for buttons to stack them */}
+        <div className="flex flex-col space-y-2">
+        
+          {/* 2. WRAP THE BUTTON WITH A LINK */}
+          <Link to="/student/profile">
+            <Button variant="outline" className="w-full">
+              View Full Profile
+            </Button>
+          </Link>
+
+          {/* NEW XP SHOP BUTTON */}
+          <Link to="/student/xp-shop">
+            <Button variant="primary" className="w-full"> {/* You can change variant="primary" to "outline" if you prefer */}
+              XP Shop
+            </Button>
+          </Link>
+        
+        </div>
+        {/* --- MODIFICATION END --- */}
         
       </div>
     </Card>

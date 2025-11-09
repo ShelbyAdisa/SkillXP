@@ -9,9 +9,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 
 // Import Your Main Pages (these will be wrapped by the Layout)
-import Home from './pages/Home';
+//import Home from './pages/Home';
 import Classroom from './pages/Classroom'; 
-import ChatBox from './components/chat/ChatBox';
 
 // Import Role-Specific Dashboards
 import AdminDashboard from './pages/dashboards/AdminDashboard';
@@ -26,9 +25,9 @@ import ParentNotifications from './pages/parent/ParentNotifications';
 import ParentProgress from './pages/parent/ParentProgress';
 
 // Import the new Student Profile Page
-import StudentProfile from './pages/student/StudentProfile'; // <-- 1. NEW IMPORT
+import StudentProfile from './pages/student/StudentProfile';
+import XPShop from './pages/student/XPShop';
 
-// (Note: The old 'Dashboard.jsx' page is no longer imported or used)
 
 function App() {
   return (
@@ -40,8 +39,8 @@ function App() {
 
         {/* --- Main App Routes --- */}
         <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          
+          {/* <Route path="/" element={<Home />} />
+           */}
           <Route path="/classroom/:classId" element={<Classroom />} />
 
           {/* === YOUR NEW TEST ROUTE === */}
@@ -62,6 +61,8 @@ function App() {
           <Route path="/parent/children" element={<ParentChildren />} />
           <Route path="/parent/notifications" element={<ParentNotifications />} />
           <Route path="/parent/progress" element={<ParentProgress />} />
+
+          <Route path="/student/xp-shop" element={<XPShop />} />
 
 
           {/* <Route path="*" element={<NotFoundPage />} /> */}
