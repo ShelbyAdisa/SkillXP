@@ -3,6 +3,7 @@ import Card from '../../shared/Card';
 import UserAvatar from '../../shared/UserAvatar';
 import Button from '../../shared/Button';
 import { useStudentRewards } from '../../../hooks/useStudentRewards';
+import { Link } from 'react-router-dom'; // <-- 1. NEW IMPORT
 
 // 1. Create a dummy user object right here.
 const DUMMY_USER = {
@@ -42,9 +43,13 @@ const StudentProfileCard = () => {
           <span className="text-[#82959B] font-medium">Karma (XP)</span>
         </div>
         
-        <Button variant="outline" className="w-full">
-          View Full Profile
-        </Button>
+        {/* 2. WRAP THE BUTTON WITH A LINK */}
+        <Link to="/student/profile">
+          <Button variant="outline" className="w-full">
+            View Full Profile
+          </Button>
+        </Link>
+        
       </div>
     </Card>
   );
