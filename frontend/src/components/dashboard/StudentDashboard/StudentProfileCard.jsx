@@ -25,18 +25,21 @@ const StudentProfileCard = () => {
       <div className="flex justify-center -mt-12 mb-4">
         <UserAvatar 
           user={user} 
-          className="w-24 h-24 text-4xl border-4 border-white rounded-full ring-2 ring-gray-200" 
+          /* Updated border/ring colors for dark theme */
+          className="w-24 h-24 text-4xl border-4 border-[#0F1A1C] rounded-full ring-2 ring-[#223237]" 
         />
       </div>
 
       <div className="p-4">
-        {/* 3. Use the dummy user's username */}
-        <h2 className="text-xl font-bold text-center text-gray-900">{user.username}</h2>
+        {/* 3. Use dark theme text color */}
+        <h2 className="text-xl font-bold text-center text-[#D7DADC]">{user.username}</h2>
         
         {/* Karma/XP section */}
         <div className="flex flex-col items-center my-4">
-          <span className="font-bold text-3xl text-primary">{xp.toLocaleString()}</span>
-          <span className="text-gray-500 font-medium">Karma (XP)</span>
+          {/* Use a lighter color for the XP */}
+          <span className="font-bold text-3xl text-emerald-400">{xp.toLocaleString()}</span>
+          {/* Use dark theme text color */}
+          <span className="text-[#82959B] font-medium">Karma (XP)</span>
         </div>
         
         <Button variant="outline" className="w-full">

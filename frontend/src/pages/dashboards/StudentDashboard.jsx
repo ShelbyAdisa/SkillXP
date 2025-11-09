@@ -1,65 +1,104 @@
-import React from 'react';
-// 1. We no longer need useAuth here
-// import { useAuth } from '../../context/AuthContext';
+import React, { useState } from 'react';
+import {
+  Flame, Sparkles, TrendingUp, Clock, Award
+} from 'lucide-react';
+
+// Import your components
 import SiteNavbar from '../../components/layout/SiteNavbar';
-import ClassHeader from '../../components/classroom/ClassHeader';
 import Feed from '../../components/classroom/Feed';
-import Sidebar from '../../components/classroom/Sidebar';
+
+// --- THIS IS THE FIX ---
+// We now import our new, dedicated dashboard sidebar
+import StudentDashboardSidebar from '../../components/dashboard/StudentDashboard/StudentDashboardSidebar';
+// ----------------------
 
 // Our custom hooks and sidebar widgets
 import { useStudentDashboardFeed } from '../../hooks/useStudentDashboardFeed';
-import StudentProfileCard from '../../components/dashboard/StudentDashboard/StudentProfileCard';
-import MySkillSpacesCard from '../../components/dashboard/StudentDashboard/MySkillSpacesCard';
-import LeaderboardCard from '../../components/dashboard/StudentDashboard/LeaderboardCard';
+// We no longer need to import the widgets here, the new sidebar does it.
 
-// 2. Create the same dummy user here
+// Create the same dummy user here
 const DUMMY_USER = {
   id: 'student-123',
   username: 'test_student',
   avatar_url: null,
 };
 
+// Define the sortOptions array
+const sortOptions = [
+  { name: 'Best', icon: Award },
+  { name: 'Hot', icon: Flame },
+  { name: 'New', icon: Sparkles },
+  { name: 'Top', icon: TrendingUp },
+  { name: 'Rising', icon: Clock }
+];
+
+
 const StudentDashboard = () => {
-  // 3. Use the dummy user object
+  // Use the dummy user object
   const user = DUMMY_USER;
   
-  // 4. Fetch the personalized feed data (hook no longer needs userId)
+  // Fetch the personalized feed data
   const { posts, isLoading } = useStudentDashboardFeed();
 
-  // 5. Create the array of widgets for the sidebar
-  //    These components no longer need the user prop
-  const sidebarWidgets = [
-    <StudentProfileCard />,
-    <MySkillSpacesCard />,
-    <LeaderboardCard />
-  ];
+  // Add state for sorting
+  const [sortBy, setSortBy] = useState('Best');
+  const [isSortOpen, setIsSortOpen] = useState(false);
+
+  // Add a placeholder vote handler
+  const handleVote = (postId, direction) => {
+    console.log(`Vote registered on dashboard: Post ${postId}, Direction ${direction}`);
+  };
+
+  // Create the sortedPosts variable
+  const sortedPosts = [...(posts || [])].sort((a, b) => {
+    switch (sortBy) {
+      case 'New':
+        return b.id - a.id; 
+      case 'Rising':
+        return (b.comments || 0) - (a.comments || 0);
+      case 'Best':
+      case 'Hot':
+      case 'Top':
+      default:
+        return (b.votes || 0) - (a.votes || 0);
+    }
+  });
+  
+  // --- THIS IS THE FIX ---
+  // The sidebarWidgets array is no longer needed.
+  // ----------------------
 
   return (
-    <div className="bg-gray-50 min-h-screen">
-      {/* This component might rely on AuthContext. 
-          If it crashes, you may need to wrap it in <AuthProvider> in main.jsx
-          or modify it to also use a dummy user.
-          For now, we'll assume it's okay.
-      */}
+    // Removed bg-gray-50 to match the dark theme
+    <div className="min-h-screen">
       <SiteNavbar />
       
-      {/* 6. Use the dummy user's username in the header */}
-      <ClassHeader
-        title="My Dashboard"
-        description={`Welcome back, ${user.username}! Here's what's new.`}
-      />
-
-      {/* 2-Column "Subreddit" Layout */}
-      <div className="max-w-7xl mx-auto p-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* --- THIS IS THE LAYOUT FIX ---
+        We add 'pt-20' here. The navbar is 'h-14' (56px). 
+        pt-20 (80px) gives us space below the navbar.
+      */}
+      <div className="max-w-7xl mx-auto p-4 pt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* === MAIN FEED (LEFT) === */}
         <div className="md:col-span-2">
-          <Feed posts={posts} isLoading={isLoading} />
+          <Feed
+            sortedPosts={sortedPosts}
+            handleVote={handleVote}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            isSortOpen={isSortOpen}
+            setIsSortOpen={setIsSortOpen}
+            sortOptions={sortOptions}
+          />
         </div>
 
         {/* === SIDEBAR (RIGHT) === */}
         <div className="md:col-span-1">
-          <Sidebar widgets={sidebarWidgets} />
+          {/* --- THIS IS THE COMPONENT FIX ---
+            We render our new sidebar and pass it the 'user' prop
+            so it can give it to the StudentProfileCard.
+          */}
+          <StudentDashboardSidebar user={user} />
         </div>
 
       </div>

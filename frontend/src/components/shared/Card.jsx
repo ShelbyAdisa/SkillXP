@@ -11,16 +11,17 @@ const Card = ({
 }) => {
   return (
     <div className={`
-      bg-white rounded-lg shadow-sm border border-gray-200 
+      bg-[#0F1A1C] rounded-lg border border-[#223237] 
       ${padding ? 'p-6' : ''} 
-      ${hover ? 'hover:shadow-md transition-shadow duration-200' : ''}
+      ${hover ? 'hover:border-[#2d3f45] transition-shadow duration-200' : ''}
       ${className}
     `}>
       {(title || action) && (
         <div className="flex justify-between items-start mb-4">
           <div>
-            {title && <h3 className="text-lg font-semibold text-gray-900">{title}</h3>}
-            {subtitle && <p className="text-sm text-gray-500 mt-1">{subtitle}</p>}
+            {/* Use dark theme text colors */}
+            {title && <h3 className="text-lg font-semibold text-[#D7DADC]">{title}</h3>}
+            {subtitle && <p className="text-sm text-[#82959B] mt-1">{subtitle}</p>}
           </div>
           {action && <div>{action}</div>}
         </div>
@@ -31,4 +32,3 @@ const Card = ({
 }
 
 export default Card
-

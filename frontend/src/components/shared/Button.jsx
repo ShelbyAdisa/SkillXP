@@ -13,15 +13,17 @@ const Button = ({
 }) => {
   const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2'
   
+  // --- Updated variants for dark theme ---
   const variants = {
-    primary: 'bg-slate-700 text-white hover:bg-slate-800 focus:ring-slate-500 disabled:bg-slate-400',
-    secondary: 'bg-slate-200 text-slate-900 hover:bg-slate-300 focus:ring-slate-500 disabled:bg-slate-100',
-    success: 'bg-slate-700 text-white hover:bg-slate-800 focus:ring-slate-500 disabled:bg-slate-400',
-    danger: 'bg-slate-700 text-white hover:bg-slate-800 focus:ring-slate-500 disabled:bg-slate-400',
-    outline: 'border-2 border-slate-700 text-slate-700 hover:bg-slate-50 focus:ring-slate-500',
-    ghost: 'text-slate-700 hover:bg-slate-100 focus:ring-slate-500',
-    slate: 'bg-slate-700 text-white hover:bg-slate-800 focus:ring-slate-500 disabled:bg-slate-400'
+    primary: 'bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500 disabled:bg-gray-600',
+    secondary: 'bg-[#223237] text-[#D7DADC] hover:bg-[#2d3f45] focus:ring-gray-500 disabled:bg-gray-800',
+    success: 'bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500 disabled:bg-gray-600',
+    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-gray-600',
+    outline: 'border-2 border-[#223237] text-[#D7DADC] hover:bg-[#131F23] focus:ring-gray-500',
+    ghost: 'text-[#D7DADC] hover:bg-[#131F23] focus:ring-gray-500',
+    slate: 'bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500 disabled:bg-gray-600' // Changed slate to be primary
   }
+  // ------------------------------------
   
   const sizes = {
     sm: 'px-3 py-1.5 text-sm',
@@ -49,4 +51,3 @@ const Button = ({
 }
 
 export default Button
-
