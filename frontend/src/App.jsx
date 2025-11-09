@@ -11,7 +11,7 @@ import Signup from './pages/Signup';
 // Import Your Main Pages (these will be wrapped by the Layout)
 import Home from './pages/Home';
 import Classroom from './pages/Classroom'; 
-
+import ChatBox from './components/chat/ChatBox';
 
 // Import Role-Specific Dashboards
 import AdminDashboard from './pages/dashboards/AdminDashboard';

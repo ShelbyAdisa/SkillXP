@@ -1,9 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   ArrowUp, ArrowDown, MessageSquare, Share2, Bookmark, MoreHorizontal
 } from 'lucide-react';
 
 export default function Post({ post, handleVote }) {
+  // --- FIX: Use dynamic class name from post, with a fallback ---
+  const postClassName = post.className || "LearnProgramming";
+  
+  // Use post.classSlug if available, otherwise create one from the class name
+  const postClassSlug = post.classSlug || postClassName.toLowerCase();
+
   return (
     <div className="bg-[#0F1A1C] border border-[#223237] hover:border-[#2d3f45] rounded-xl overflow-hidden transition-colors">
       {/* Post Header */}
@@ -12,8 +19,16 @@ export default function Post({ post, handleVote }) {
           <img src={post.authorAvatar} className="w-8 h-8 rounded-full shrink-0" alt={`${post.author} avatar`} />
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-medium text-[#B8C5C9] truncate">Class: LearnProgramming</span>
-              <span className="text-[#82959B]">•</span>
+              
+              {/* This Link now uses the dynamic variables */}
+              <Link 
+                to={`/classroom/${postClassSlug}`} 
+                className="text-xs font-medium text-[#B8C5C9] truncate hover:underline"
+              >
+                Class: {postClassName}
+              </Link>
+              
+              <span className="text-[#82959B]"> • </span>
               <span className="text-xs text-[#82959B]">{post.time}</span>
             </div>
             <div className="text-xs text-[#82959B] truncate">u/{post.author}</div>
